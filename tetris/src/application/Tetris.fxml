@@ -1,8 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</AnchorPane>
 
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="application.Tetris">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="602.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="10.0" width="400.0" />
+      <AnchorPane prefHeight="600.0" prefWidth="400.0">
+         <children>
+            <ImageView fitHeight="119.0" fitWidth="116.0" layoutX="270.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@TETRIS.png" />
+               </image>
+            </ImageView>
+            <Text fill="RED" layoutX="262.0" layoutY="125.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.5" text="SCORE" wrappingWidth="80.099609375">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Text>
+            <Text fill="RED" layoutX="270.0" layoutY="184.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.5" text="LINES" wrappingWidth="80.099609375">
+               <font>
+                  <Font name="SansSerif Regular" size="22.0" />
+               </font>
+            </Text>
+            <Text fill="#ff4444" layoutX="270.0" layoutY="239.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.5" text="TIME" wrappingWidth="80.099609375">
+               <font>
+                  <Font name="SansSerif Regular" size="22.0" />
+               </font>
+            </Text>
+            <TextArea fx:id="scoreCounter" layoutX="334.0" layoutY="101.0" prefHeight="31.0" prefWidth="45.0" />
+            <TextArea fx:id="lineCounter" layoutX="334.0" layoutY="161.0" prefHeight="31.0" prefWidth="45.0" />
+            <TextArea fx:id="timeCounter" layoutX="334.0" layoutY="216.0" prefHeight="31.0" prefWidth="45.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
