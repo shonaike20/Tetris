@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Tetris">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="602.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="10.0" width="400.0" />
+      <AnchorPane prefHeight="600.0" prefWidth="400.0">
+         <children>
+            <Text fill="RED" layoutX="67.0" layoutY="279.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.5" text="SCORE :" wrappingWidth="96.099609375">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Text>
+            <Text fill="RED" layoutX="67.0" layoutY="357.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.5" text="HIGH SCORE: " wrappingWidth="160.099609375">
+               <font>
+                  <Font name="SansSerif Regular" size="22.0" />
+               </font>
+            </Text>
+            <Text fill="RED" layoutX="54.0" layoutY="131.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.5" text="GAME OVER" textAlignment="CENTER" wrappingWidth="292.099609375">
+               <font>
+                  <Font size="53.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>
-
