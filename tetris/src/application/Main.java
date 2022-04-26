@@ -17,11 +17,14 @@ public class Main extends Application {
 	
 	public void start(Stage primaryStage) {
 		try {
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Tetris.fxml"));
-			Scene scene = new Scene(root,400,600);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			AnchorPane root = new AnchorPane();
+			 root = (AnchorPane)FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
+		    Scene scene = new Scene(root,400,600);
+		    root.setStyle("-fx-background-image:url('Main.png'); -fx-background-repeat: no-repeat; -fx-background-size: 400 600; -fx-background-position: center center;");
+			//String css =this.getClass().getResource("/application/application.css").toExternalForm();
+			//primaryStage.getStylesheets().add(css);
 			primaryStage.setScene(scene);
-			primaryStage.show();
+			
 			 String path = "src/application/tetrisgame.mp3";  
 	          
 		        //Instantiating Media class  
