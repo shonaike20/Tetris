@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -28,6 +29,7 @@ public class Tetris extends Application {
 	public static int[][] MESH = new int[XMAX / SIZE][YMAX / SIZE];
 	private static Pane group = new Pane();
 	private static Form object;
+	private static Form buffer;
 	private static Scene scene = new Scene(group, XMAX + 150, YMAX);
 	public static int score = 0;
 	private static int top = 0;
@@ -119,8 +121,16 @@ public class Tetris extends Application {
 				case LEFT:
 					Controller.MoveLeft(form);
 					break;
-				case UP:
+				case A:
 					MoveTurn(form);
+					break;
+				case UP:
+					buffer = object;
+					while(buffer==object) {
+						MoveDown(form);
+						score++;
+					}
+					top=0;
 					break;
 				}
 			}
