@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<AnchorPane prefHeight="677.0" prefWidth="481.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Tetris">
    <children>
-      <AnchorPane layoutX="-14.0" prefHeight="600.0" prefWidth="400.0">
+      <AnchorPane layoutX="-98.0" layoutY="-207.0" prefHeight="738.0" prefWidth="510.0">
          <children>
-            <ImageView fitHeight="370.0" fitWidth="386.0" layoutX="30.0" layoutY="-70.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@TETRIS.png" />
-               </image>
-            </ImageView>
+            <Button layoutX="243.0" layoutY="505.0" mnemonicParsing="false" onAction="#start" prefHeight="103.0" prefWidth="134.0" style="-fx-background-color: transparent;" />
+            <Button layoutX="243.0" layoutY="648.0" mnemonicParsing="false" prefHeight="103.0" prefWidth="134.0" style="-fx-background-color: transparent;" />
          </children></AnchorPane>
    </children>
 </AnchorPane>
