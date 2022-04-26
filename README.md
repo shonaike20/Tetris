@@ -1,5 +1,7 @@
 # tetris-project
 
+![TETRIS](https://user-images.githubusercontent.com/58574818/165378114-792e1fdc-bedb-43ff-b48f-da3403412a4b.png
+
 TETRIS
 By: Group 10
 Tim Armstrong
@@ -10,3 +12,4 @@ A game of Tetris developed using Java on SDK 1.8.0 utilizing JavaFX and Scenebui
 The game plays exactly like a normal game of Tetris with the fields during gameplay being Score, Lines and HighScore.
 
 Version of Java 1.8.0 or higher required.
+)
