@@ -1,8 +1,12 @@
 package application;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Application;
@@ -32,10 +36,12 @@ public class Tetris extends Application {
 	private static Form buffer;
 	private static Scene scene = new Scene(group, XMAX + 150, YMAX);
 	public static int score = 0;
+	public static int highScore = 0;
 	private static int top = 0;
 	private static boolean game = true;
 	private static Form nextObj = Controller.makeRect();
 	private static int linesNo = 0;
+	private static boolean record = false;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -46,18 +52,44 @@ public class Tetris extends Application {
 		for (int[] a : MESH) {
 			Arrays.fill(a, 0);
 		}
+		
+	    try {
+	        File myObj = new File("src\\application\\score.txt");
+	        Scanner myReader = new Scanner(myObj);
+	        
+	        //Creates variable for the high score taken from score.txt
+	        while (myReader.hasNextLine()) {
+	          String data = myReader.nextLine();
+	          //System.out.println(data);
+	          highScore = Integer.parseInt(data);
+	        }
+	        
+	        myReader.close();
+	      } catch (FileNotFoundException e) {
+	        System.out.println("An error occurred.");
+	        e.printStackTrace();
+	      }
+		
         Stage s = new Stage();
 		Line line = new Line(XMAX, 0, XMAX, YMAX);
 		Text scoretext = new Text("Score: ");
 		scoretext.setStyle("-fx-font: 20 arial;");
 		scoretext.setY(50);
 		scoretext.setX(XMAX + 5);
+		
 		Text level = new Text("Lines: ");
 		level.setStyle("-fx-font: 20 arial;");
 		level.setY(100);
 		level.setX(XMAX + 5);
 		level.setFill(Color.GREEN);
-		group.getChildren().addAll(scoretext, line, level);
+		
+		Text hi = new Text("Hi-Score: ");
+		hi.setStyle("-fx-font: 20 arial;");
+		hi.setY(150);
+		hi.setX(XMAX + 5);
+		hi.setFill(Color.GREEN);
+		
+		group.getChildren().addAll(scoretext, line, level, hi);
 
 		Form a = nextObj;
 		group.getChildren().addAll(a.a, a.b, a.c, a.d);
@@ -67,6 +99,8 @@ public class Tetris extends Application {
 		s.setScene(scene);
 		s.setTitle("T E T R I S");
 		s.show();
+		
+		record = false;
 
 		Timer fall = new Timer();
 		TimerTask task = new TimerTask() {
@@ -87,6 +121,32 @@ public class Tetris extends Application {
 							over.setY(250);
 							over.setX(10);
 							group.getChildren().add(over);
+							
+							File file = new File("src\\application\\score.txt");
+							FileWriter W = null;
+							try {
+								W = new FileWriter(file, false);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							try {
+								if(record) {
+									W.write(Integer.toString(score));
+								}
+								else
+									W.write(Integer.toString(highScore));
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}			
+							try {
+								W.close();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
 							game = false;
 						}
 						// Exit
@@ -96,8 +156,15 @@ public class Tetris extends Application {
 
 						if (game) {
 							MoveDown(object);
+							
+							//high score system
+							if(score>highScore) {
+								highScore=score;
+								record=true;
+							}
 							scoretext.setText("Score: " + Integer.toString(score));
 							level.setText("Lines: " + Integer.toString(linesNo));
+							hi.setText("Hi-Score: " + Integer.toString(highScore));
 						}
 					}
 				});
@@ -121,9 +188,13 @@ public class Tetris extends Application {
 				case LEFT:
 					Controller.MoveLeft(form);
 					break;
+					
+				//turns piece
 				case A:
 					MoveTurn(form);
 					break;
+					
+				//fast drop	
 				case UP:
 					buffer = object;
 					while(buffer==object) {
