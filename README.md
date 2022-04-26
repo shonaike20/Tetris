@@ -2,8 +2,6 @@
 
 ![TETRIS](https://user-images.githubusercontent.com/58574818/165378334-23416f52-8f46-42d2-99fd-a48911086879.png)
 
-
-TETRIS
 By: Group 10
 Tim Armstrong
 Diem Bui
