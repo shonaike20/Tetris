@@ -1,6 +1,7 @@
 # tetris-project
 
-![TETRIS](https://user-images.githubusercontent.com/58574818/165378114-792e1fdc-bedb-43ff-b48f-da3403412a4b.png
+![TETRIS](https://user-images.githubusercontent.com/58574818/165378334-23416f52-8f46-42d2-99fd-a48911086879.png)
+
 
 TETRIS
 By: Group 10
