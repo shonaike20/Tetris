@@ -4,18 +4,27 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javafx.event.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -42,18 +51,46 @@ public class Tetris extends Application {
 	private static Form nextObj = Controller.makeRect();
 	private static int linesNo = 0;
 	private static boolean record = false;
+	Text scoretext = new Text("Score: ");
+	Text level = new Text("Lines: ");
+	Text hi = new Text("Hi-Score: ");
+@FXML
+    public Button closeButton;
+@FXML
+    public TextField ScoreView= new TextField();
+@FXML
+public Button closeButton1;
+@FXML
+public TextField HighScoreView= new TextField();
+public static void main(String[] args) {
+	launch(args);
+}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
+	void quitGame(ActionEvent event) throws IOException{
+		
+    	URL url = new File("src/application/Gameover.fxml").toURI().toURL();
+    	group = FXMLLoader.load(url);
+        //mainPane = FXMLLoader.load(getClass().getClassLoader().getResource("Classified.fxml"));// pane you are GOING TO
+        Scene scene = new Scene(group);// pane you are GOING TO show
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();// pane you are On
+        window.setScene(scene);
+        window.show();
 
+    }
+	public void handleCloseButtonAction(ActionEvent event) {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+    }
+	public void exitButton(ActionEvent event) {
+        Stage stage = (Stage) closeButton1.getScene().getWindow();
+        stage.close();
+    }
+	
 	
 	public void start(ActionEvent event) throws IOException{
 		for (int[] a : MESH) {
-			Arrays.fill(a, 0);
-		}
-		
-	    try {
+			Arrays.fill(a, 0);}
+		try {
 	        File myObj = new File("src\\application\\score.txt");
 	        Scanner myReader = new Scanner(myObj);
 	        
@@ -69,28 +106,41 @@ public class Tetris extends Application {
 	        System.out.println("An error occurred.");
 	        e.printStackTrace();
 	      }
-		
+        
         Stage s = new Stage();
-		Line line = new Line(XMAX, 0, XMAX, YMAX);
-		Text scoretext = new Text("Score: ");
+        
+        Button button=new Button("Click to quit");
+        button.setOnAction(actionEvent -> {    // lambda expression
+        try {
+        	s.close();
+        	quitGame(event);
+        	game = false;
+			
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+        });
+        
+        Line line = new Line(XMAX, 0, XMAX, YMAX);
+		
 		scoretext.setStyle("-fx-font: 20 arial;");
 		scoretext.setY(50);
 		scoretext.setX(XMAX + 5);
 		
-		Text level = new Text("Lines: ");
 		level.setStyle("-fx-font: 20 arial;");
 		level.setY(100);
 		level.setX(XMAX + 5);
 		level.setFill(Color.GREEN);
 		
-		Text hi = new Text("Hi-Score: ");
+		
 		hi.setStyle("-fx-font: 20 arial;");
 		hi.setY(150);
 		hi.setX(XMAX + 5);
 		hi.setFill(Color.GREEN);
-		
-		group.getChildren().addAll(scoretext, line, level, hi);
-
+		group.getChildren().addAll(scoretext,line, level,button,hi);
 		Form a = nextObj;
 		group.getChildren().addAll(a.a, a.b, a.c, a.d);
 		moveOnKeyPress(a);
@@ -99,9 +149,7 @@ public class Tetris extends Application {
 		s.setScene(scene);
 		s.setTitle("T E T R I S");
 		s.show();
-		
-		record = false;
-
+        record = false;
 		Timer fall = new Timer();
 		TimerTask task = new TimerTask() {
 			public void run() {
@@ -121,7 +169,6 @@ public class Tetris extends Application {
 							over.setY(250);
 							over.setX(10);
 							group.getChildren().add(over);
-							
 							File file = new File("src\\application\\score.txt");
 							FileWriter W = null;
 							try {
@@ -146,7 +193,6 @@ public class Tetris extends Application {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							
 							game = false;
 						}
 						// Exit
@@ -156,7 +202,6 @@ public class Tetris extends Application {
 
 						if (game) {
 							MoveDown(object);
-							
 							//high score system
 							if(score>highScore) {
 								highScore=score;
@@ -172,7 +217,17 @@ public class Tetris extends Application {
 		};
 		fall.schedule(task, 0, 300); 
 	}
-
+    public void GameOverHandle(ActionEvent event) throws IOException{
+    	
+    	ScoreView.setText(Integer.toString(score));
+    	
+		
+    }
+ public void HighScoreHandle(ActionEvent event) throws IOException{
+    	HighScoreView.setText(Integer.toString(highScore));
+		
+    }
+	
 	private void moveOnKeyPress(Form form) {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
@@ -188,20 +243,8 @@ public class Tetris extends Application {
 				case LEFT:
 					Controller.MoveLeft(form);
 					break;
-					
-				//turns piece
-				case A:
-					MoveTurn(form);
-					break;
-					
-				//fast drop	
 				case UP:
-					buffer = object;
-					while(buffer==object) {
-						MoveDown(form);
-						score++;
-					}
-					top=0;
+					MoveTurn(form);
 					break;
 				}
 			}
@@ -635,8 +678,6 @@ public class Tetris extends Application {
 			yb = rect.getY() + y * MOVE < YMAX;
 		return xb && yb && MESH[((int) rect.getX() / SIZE) + x][((int) rect.getY() / SIZE) - y] == 0;
 	}
-
-
 	@Override
 	public void start(Stage arg0) throws Exception {
 		// TODO Auto-generated method stub
